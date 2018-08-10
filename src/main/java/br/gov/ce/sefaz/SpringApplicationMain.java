@@ -6,10 +6,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class SpringAula01Application  extends SpringBootServletInitializer  {//extender para usar wildfly
+public class SpringApplicationMain  extends SpringBootServletInitializer  {//extender para usar wildfly
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringAula01Application.class, args);
+		SpringApplication.run(SpringApplicationMain.class, args);
 	}
 	
 	@Override // sobreescrever para usar wildfly

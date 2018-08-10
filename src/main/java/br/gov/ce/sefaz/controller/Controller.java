@@ -3,20 +3,19 @@ package br.gov.ce.sefaz.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ce.sefaz.model.HashModel;
 
 @RestController
-@RequestMapping("/")
 public class Controller {
 	
-	@GetMapping()
+	@GetMapping("/my-maven-password-hash")
 	public String seuNome(){
 		
 		return "Bem-Vindo";
 	}
+	
 	
 	@PostMapping("/my-maven-password-hash")
 	public HashModel init(@RequestBody HashModel hashModel ){
