@@ -1,4 +1,4 @@
-package br.com.workmade.springaula01;
+package br.gov.ce.sefaz;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringAula01ApplicationTests {
+public class SpringApplicationTests {
 
 	@Test
 	public void contextLoads() {

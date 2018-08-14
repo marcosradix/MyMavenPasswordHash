@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "myMavenPasswordHash",
+                "projectName": "myMavenPasswordHash",
+                "workingDirectory": "d:\\cesinf\\MyMavenPasswordHash",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "myMavenPasswordHash",
+                "projectName": "myMavenPasswordHash",
+                "workingDirectory": "d:\\cesinf\\MyMavenPasswordHash",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

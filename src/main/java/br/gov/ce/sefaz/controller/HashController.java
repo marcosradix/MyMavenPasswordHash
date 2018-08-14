@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.gov.ce.sefaz.model.HashModel;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/mymavenpasswordhash")
 public class HashController {
 	
 	@GetMapping
 	public String goHome(HashModel hashModel){
 		return "index";
 	}
+	
 	
 	
 	@PostMapping(value="/mavenhash")
