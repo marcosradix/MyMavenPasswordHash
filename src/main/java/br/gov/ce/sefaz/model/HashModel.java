@@ -1,11 +1,8 @@
 package br.gov.ce.sefaz.model;
 
-import java.io.Serializable;
-
-public class HashModel implements Serializable {
+public class HashModel {
 
 	
-	private static final long serialVersionUID = 7145992590242080823L;
 	private String senhaPrincipal;
 	private String senhaMaster;
 	private String senhaServer;
