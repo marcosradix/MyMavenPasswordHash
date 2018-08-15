@@ -26,6 +26,9 @@
 	        </nav>
 	<br />
 	        <div class="container" id="cadastro" >
+	        
+	        <div th:replace="/alert" ></div>
+	        
 	            <form th:action="@{/mymavenpasswordhash/mavenhash}"  th:object="${hashModel}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-12">
