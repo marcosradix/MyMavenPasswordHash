@@ -20,6 +20,11 @@ public class HashController {
 		return "index";
 	}
 	
+	@RequestMapping("/mymavenpasswordhash")
+	  public void handleRequest() {
+	      throw new RuntimeException("Erro inesperado.");
+	  }
+	
 	@PostMapping(value="/mavenhash")
 	public String gerarHash(@ModelAttribute HashModel hashModel, ModelMap model ){
 		HashModel hashsGerados = null;
