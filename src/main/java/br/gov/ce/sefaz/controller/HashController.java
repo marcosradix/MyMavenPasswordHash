@@ -20,15 +20,13 @@ public class HashController {
 		return "index";
 	}
 	
-	
-	
 	@PostMapping(value="/mavenhash")
 	public String gerarHash(@ModelAttribute HashModel hashModel, ModelMap model ){
 		HashModel hashsGerados = null;
 		try {
 			hashsGerados = gerarSenhaHash(hashModel.getSenhaPrincipal());
 			
-			model.addAttribute("hashModel", hashsGerados);
+			model.addAttribute("hashModel", hashsGerados).addAttribute("success", "Hash construido com sucesso");
 		} catch (PlexusCipherException e) {
 			e.printStackTrace();
 		}
