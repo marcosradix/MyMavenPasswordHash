@@ -1,8 +1,10 @@
 package br.gov.ce.sefaz.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class HashModel {
 
-	
+	@NotEmpty(message="O campo é obrigatório")
 	private String senhaPrincipal;
 	private String senhaMaster;
 	private String senhaServer;
