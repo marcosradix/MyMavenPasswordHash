@@ -2,6 +2,7 @@ package br.gov.ce.sefaz.controller;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.sonatype.plexus.components.cipher.DefaultPlexusCipher;
 import org.sonatype.plexus.components.cipher.PlexusCipherException;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ import br.gov.ce.sefaz.model.HashModel;
 @RequestMapping("/mymavenpasswordhash")
 public class HashController {
 	
+	
+	private Logger logger = Logger.getLogger(HashController.class);
+	
 	@GetMapping
 	public String goHome(HashModel hashModel){
 		return "index";
@@ -30,9 +34,10 @@ public class HashController {
 	@PostMapping(value="/mavenhash")
 	public ModelAndView gerarHash(@Valid HashModel hashModel,BindingResult result , ModelAndView model ){
 		HashModel hashsGerados = null;
+		
 		try {
 			hashsGerados = gerarSenhaHash(hashModel.getSenhaPrincipal());
-			
+			logger.info("valor nulo : " + hashsGerados.getSenhaPrincipal());
 			if(result.hasErrors()){
 				result.rejectValue("senhaPrincipal", "error", "Como você vai gerar o hash se não informou nada.");
 			}else{
