@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.sonatype.plexus.components.cipher.DefaultPlexusCipher;
 import org.sonatype.plexus.components.cipher.PlexusCipherException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.gov.ce.sefaz.model.HashModel;
+import br.gov.ce.sefaz.util.Producer;
 
 @Controller
 @RequestMapping("/mymavenpasswordhash")
@@ -20,10 +22,16 @@ public class HashController {
 	
 	
 	private Logger logger = Logger.getLogger(HashController.class);
+	@Autowired
+	private Producer producer;
+	private long now = System.currentTimeMillis();
 	
 	@GetMapping
-	public String goHome(HashModel hashModel){
-		return "index";
+	public ModelAndView goHome(HashModel hashModel){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("dataInicioView", producer.produceLogarData(now).getDataFormatada());
+		modelAndView.setViewName("index");
+		return modelAndView;
 	}
 	
 	@RequestMapping("/mymavenpasswordhash")
