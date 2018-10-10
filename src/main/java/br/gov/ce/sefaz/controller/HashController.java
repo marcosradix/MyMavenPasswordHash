@@ -24,10 +24,11 @@ public class HashController {
 	private Logger logger = Logger.getLogger(HashController.class);
 	@Autowired
 	private Producer producer;
-	private long now = System.currentTimeMillis();
+	private long now = 0;
 	
 	@GetMapping
 	public ModelAndView goHome(HashModel hashModel){
+		now = System.currentTimeMillis();
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("dataInicioView", producer.produceLogarData(now).getDataFormatada());
 		modelAndView.setViewName("index");
