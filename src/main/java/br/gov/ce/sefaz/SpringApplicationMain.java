@@ -3,9 +3,15 @@ package br.gov.ce.sefaz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
+import br.gov.ce.sefaz.util.FileStorageProperties;
+
 @SpringBootApplication
+@EnableConfigurationProperties({
+    FileStorageProperties.class
+})
 public class SpringApplicationMain  extends SpringBootServletInitializer {//extender para usar wildfly
 
 

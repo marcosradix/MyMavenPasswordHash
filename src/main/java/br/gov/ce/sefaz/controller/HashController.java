@@ -1,19 +1,28 @@
 package br.gov.ce.sefaz.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.sonatype.plexus.components.cipher.DefaultPlexusCipher;
 import org.sonatype.plexus.components.cipher.PlexusCipherException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.gov.ce.sefaz.model.HashModel;
+import br.gov.ce.sefaz.util.FileStorageService;
 import br.gov.ce.sefaz.util.Producer;
 
 @Controller
@@ -25,6 +34,9 @@ public class HashController {
 	@Autowired
 	private Producer producer;
 	private long now = 0;
+	
+	@Autowired
+	private FileStorageService fileStorageService;
 	
 	@GetMapping
 	public ModelAndView goHome(HashModel hashModel){
@@ -50,6 +62,7 @@ public class HashController {
 			if(result.hasErrors()){
 				result.rejectValue("senhaPrincipal", "error", "Como você vai gerar o hash se não informou nada.");
 			}else{
+				logger.info("Hash gerado com sucesso!");
 				model.addObject("hashModel", hashsGerados).addObject("success", "Hash construido com sucesso");
 			}
 			
@@ -60,6 +73,31 @@ public class HashController {
 		model.setViewName("index");
 		return model;
 	}
+	
+	@GetMapping("/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+	
+	
 	
 	public HashModel gerarSenhaHash(String senhaPrincipal) throws PlexusCipherException{
 		DefaultPlexusCipher cipher = new DefaultPlexusCipher();

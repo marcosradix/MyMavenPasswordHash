@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <title>HashMven</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -25,12 +24,17 @@
 
 				<div >
 					<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<h3>
+							<span><a
+								th:href="@{http://ic.sefaz.ce.gov.br/doku.php?id=servicos:artifactory}">Tutorial - </a></span>
+						</h3></li>
 						<li class="nav-item active"><i class="oi oi-caret-right"></i>
-							<h3>
-								<span><a
-									th:href="@{http://ic.sefaz.ce.gov.br/doku.php?id=servicos:artifactory}">Tutorial</a></span>
-							</h3></li>
-					</ul>
+						<h3>
+							<span><a
+								th:href="@{/mymavenpasswordhash/downloadFile/MyMavenPassword.jar}"> Versão Desktop</a></span>
+						</h3></li>
+				</ul>
 	
 				</div>
 
