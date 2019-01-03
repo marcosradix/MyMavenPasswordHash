@@ -1,6 +1,9 @@
 package br.gov.ce.sefaz.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -19,9 +22,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.gov.ce.sefaz.model.HashModel;
+import br.gov.ce.sefaz.model.UploadFileResponse;
 import br.gov.ce.sefaz.util.FileStorageService;
 import br.gov.ce.sefaz.util.Producer;
 
@@ -96,8 +103,28 @@ public class HashController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
-	
-	
+
+    
+    @PostMapping("/uploadFile")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles")
+    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> uploadFile(file))
+                .collect(Collectors.toList());
+    }
 	
 	public HashModel gerarSenhaHash(String senhaPrincipal) throws PlexusCipherException{
 		DefaultPlexusCipher cipher = new DefaultPlexusCipher();
